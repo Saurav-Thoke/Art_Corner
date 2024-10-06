@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Table(name="Transactions")
 public class Transaction {
 
     @Id
@@ -20,8 +21,8 @@ public class Transaction {
     @ManyToOne
     private User customer;
 
-
+    @ManyToOne
     private Seller seller;
 
-    private LocalDateTime date=LocalDateTime.now();
+    private LocalDateTime transactionDate=LocalDateTime.now();
 }

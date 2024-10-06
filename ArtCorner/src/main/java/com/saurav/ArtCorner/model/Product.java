@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Product {
 
     @Id
@@ -25,7 +24,7 @@ public class Product {
     private int sellingPrice;
     private int discountPercent;
     private int quantity;
-    private String size;
+    private String sizes;
 
     @ElementCollection
     private List<String> images=new ArrayList<>();

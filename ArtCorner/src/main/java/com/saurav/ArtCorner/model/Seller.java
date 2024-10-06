@@ -18,6 +18,8 @@ public class Seller {
 
     private String sellerName;
 
+    private String mobile;
+
     @Column(unique = true,nullable = false)
     private String email;
 
@@ -26,8 +28,10 @@ public class Seller {
     @Embedded
     private BusinessDetails businessDetails=new BusinessDetails();
 
+    @Embedded
     private BankDetails bankDetails=new BankDetails();
 
+    @OneToOne(cascade = CascadeType.ALL)
     private Address pickupAddress=new Address();
 
     private String GSTIN;

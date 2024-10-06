@@ -20,6 +20,7 @@ public class CartItem {
     @JsonIgnore    //It is used to prevent certain fields from being included in the JSON output during serialization or being processed during deserialization
     private Cart cart;
 
+    @ManyToOne
     private Product product;
 
     private Integer mrpPrice;

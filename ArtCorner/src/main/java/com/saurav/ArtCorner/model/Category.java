@@ -26,5 +26,5 @@ public class Category {
     private Category parentCategory;
 
     @NotNull
-    private Integer level;
+    private Integer levels;
 }
