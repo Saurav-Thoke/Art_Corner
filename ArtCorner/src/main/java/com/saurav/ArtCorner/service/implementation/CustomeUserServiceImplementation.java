@@ -28,7 +28,7 @@ public class CustomeUserServiceImplementation implements UserDetailsService {
         if(username.startsWith(SELLER_PREFIX))
         {
             String actualUserName=username.substring(SELLER_PREFIX.length());
-            Seller seller=sellerRepository.findByEmail(username);
+            Seller seller=sellerRepository.findByEmail(actualUserName);//-------------------------//-------------------//
             if(seller!=null)
             {
                 return buildUserDetails(seller.getEmail(),seller.getPassword(),seller.getRole());

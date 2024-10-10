@@ -3,9 +3,11 @@ package com.saurav.ArtCorner.service.implementation;
 import com.saurav.ArtCorner.config.JwtProvider;
 import com.saurav.ArtCorner.domain.UserRole;
 import com.saurav.ArtCorner.model.Cart;
+import com.saurav.ArtCorner.model.Seller;
 import com.saurav.ArtCorner.model.User;
 import com.saurav.ArtCorner.model.VerificationCode;
 import com.saurav.ArtCorner.repository.CartRepository;
+import com.saurav.ArtCorner.repository.SellerRepository;
 import com.saurav.ArtCorner.repository.UserRepository;
 import com.saurav.ArtCorner.repository.VerificationCodeRepository;
 import com.saurav.ArtCorner.request.LoginRequest;
@@ -43,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
     private final VerificationCodeRepository verificationCodeRepository;
     private final EmailService emailService;
     private final CustomeUserServiceImplementation customeUserService;
+    private final SellerRepository sellerRepository;
     @Override
     public String createUser(SignUpRequest req) throws Exception {
 
@@ -78,16 +81,27 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void sendLoginOtp(String email) throws Exception {
+    public void sendLoginOtp(String email,UserRole role) throws Exception {
         String SIGNIN_PREFIX = "signin_";
         if(email.startsWith(SIGNIN_PREFIX))
         {
             email=email.substring(SIGNIN_PREFIX.length());
 
-            User user=userRepository.findByEmail(email);
-            if(user==null)
+            if(role.equals(UserRole.ROLE_ADMIN))
             {
-                throw new Exception("User not exist whith this email");
+                Seller seller=sellerRepository.findByEmail(email);
+                if(seller==null)
+                {
+                    throw new Exception("Seller not found");
+                }
+
+            }
+            else
+            {
+                User user=userRepository.findByEmail(email);
+                if(user==null) {
+                    throw new Exception("User not exist whith this email");
+                }
             }
         }
 
@@ -133,6 +147,12 @@ public class AuthServiceImpl implements AuthService {
     private Authentication authenticate(String userName, String otp) {
 
         UserDetails userDetails=customeUserService.loadUserByUsername(userName);
+
+        String SELLER_PREFIX="seller_";
+        if(userName.startsWith(SELLER_PREFIX))
+        {
+            userName=userName.substring(SELLER_PREFIX.length());
+        }
         if(userDetails==null)
         {
             throw new BadCredentialsException("Invalid username or password");

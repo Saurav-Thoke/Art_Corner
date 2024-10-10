@@ -4,6 +4,7 @@ import com.saurav.ArtCorner.domain.UserRole;
 import com.saurav.ArtCorner.model.User;
 import com.saurav.ArtCorner.model.VerificationCode;
 import com.saurav.ArtCorner.repository.UserRepository;
+import com.saurav.ArtCorner.request.LoginOtpRequest;
 import com.saurav.ArtCorner.request.LoginRequest;
 import com.saurav.ArtCorner.response.ApiResponse;
 import com.saurav.ArtCorner.response.AuthResponse;
@@ -36,8 +37,8 @@ public class AuthController {
     }
 
     @PostMapping("/send/login-signup-otp")
-    public ResponseEntity<ApiResponse> sendOtpHandler(@RequestBody VerificationCode req) throws Exception {
-        authService.sendLoginOtp(req.getEmail());
+    public ResponseEntity<ApiResponse> sendOtpHandler(@RequestBody LoginOtpRequest req) throws Exception {
+        authService.sendLoginOtp(req.getEmail(),req.getRole());
 
         ApiResponse res=new ApiResponse();
         res.setMessage("otp sent successfully");
