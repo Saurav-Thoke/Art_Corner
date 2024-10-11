@@ -28,5 +28,6 @@ public class CartItem {
     private Integer sellingPrice;
 
     private Long userId;
+    private Integer quantity;
 
 }

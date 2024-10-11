@@ -12,7 +12,6 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Cart {
 
     @Id
@@ -27,4 +26,5 @@ public class Cart {
     private double totalSellingPrice;
     private int totalItem;
     private int totalMrpPrice;
+    private int discount;
 }
