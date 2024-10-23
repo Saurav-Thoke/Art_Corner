@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Home {
+    private List<HomeCategory> grid;
 
     private List<HomeCategory> paintings;
 

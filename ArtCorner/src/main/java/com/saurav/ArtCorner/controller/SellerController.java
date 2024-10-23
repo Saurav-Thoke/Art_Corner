@@ -2,6 +2,7 @@ package com.saurav.ArtCorner.controller;
 
 import com.saurav.ArtCorner.config.JwtProvider;
 import com.saurav.ArtCorner.model.Seller;
+import com.saurav.ArtCorner.model.SellerReport;
 import com.saurav.ArtCorner.model.VerificationCode;
 import com.saurav.ArtCorner.repository.VerificationCodeRepository;
 import com.saurav.ArtCorner.request.LoginRequest;
@@ -9,6 +10,7 @@ import com.saurav.ArtCorner.response.ApiResponse;
 import com.saurav.ArtCorner.response.AuthResponse;
 import com.saurav.ArtCorner.service.AuthService;
 import com.saurav.ArtCorner.service.EmailService;
+import com.saurav.ArtCorner.service.SellerReportService;
 import com.saurav.ArtCorner.service.SellerService;
 import com.saurav.ArtCorner.util.OtpUtil;
 import jakarta.mail.MessagingException;
@@ -16,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +29,7 @@ public class SellerController {
     private final VerificationCodeRepository verificationCodeRepository;
     private final AuthService authService;
     private final EmailService emailService;
+    private final SellerReportService sellerReportService;
 
 
 
@@ -93,4 +98,13 @@ public class SellerController {
         return ResponseEntity.ok(updatedSeller);
     }
 
+    @GetMapping
+    public ResponseEntity<SellerReport> getSellersReport(
+            @RequestHeader("Authentication")String jwt)throws Exception
+    {
+        Seller seller=sellerService.getSellerProfile(jwt);
+        SellerReport report=sellerReportService.getSellerReport(seller);
+        return new ResponseEntity<>(report,HttpStatus.OK);
+
+    }
 }

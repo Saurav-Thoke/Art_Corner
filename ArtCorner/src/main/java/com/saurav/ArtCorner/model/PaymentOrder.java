@@ -28,6 +28,6 @@ public class PaymentOrder {
     @ManyToOne
     private User user;
 
-//    @OneToMany
-//    private Set<Order> orders=new HashSet<>();
+    @OneToMany
+    private Set<Order> orders=new HashSet<>();
 }
